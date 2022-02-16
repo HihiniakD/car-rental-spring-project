@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{checkout}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white" th:insert="parts/header.html"> </header>
+
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <h2 th:text="#{checkout}"></h2>
+
+
+
+            <c:choose>
+                <c:when test="${requestScope.error != null}">
+                    <div style="text-align: center;"><p class="text-danger fw-bold"><fmt:message key="${requestScope.error}"/></p></div>
+                </c:when>
+            </c:choose>
+
+
+
+        </div>
+        <div class="row g-5">
+            <div class="col-md-5 col-lg-4 order-md-last">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-primary" th:text="#{priceBreakdown}"></span>
+                </h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0" th:text="#{carRent}"></h6>
+                            <small class="text-muted" th:text="#{for} + ' ' + ${session.days} + ' ' + #{daysTwo}"></small>
+                        </div>
+                        <span class="text-muted" th:text="${session.car_rental_price} + '$'"></span>
+                    </li>
+
+                        <li class="list-group-item d-flex justify-content-between lh-sm" th:if="${session.driver == true}">
+                            <div>
+                                <h6 class="my-0" th:text="#{personalDriver}"></h6>
+                                <small class="text-muted" th:text="#{for} + ' ' + ${session.days} + ' ' + #{daysTwo}"></small>
+                            </div>
+                            <span class="text-muted" th:text="${session.driver_price} + '$'"></span>
+                        </li>
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span th:text="#{totalPrice}"></span>
+                        <strong th:text="${session.total_price} + '$'"></strong>
+                    </li>
+                </ul>
+
+
+            </div>
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3" th:text="#{orderDetails}"></h4>
+                <form class="needs-validation" method="post" novalidate="" th:action="@{/search_cars/view_deal/book/processBooking}">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="FullName" class="form-label" th:text="#{name}"></label>
+                            <input name="name" type="text" id="FullName" class="form-control" th:value="${session.user.name}" required/>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="disabledEmail" class="form-label" th:text="#{email}"></label>
+                            <input type="text" id="disabledEmail" class="form-control" th:value="${session.user.email}" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="disabledPhone" class="form-label" th:text="#{number}"></label>
+                            <input type="text" id="disabledPhone" class="form-control" disabled th:value="${session.user.phone}">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="disabledPickUpDate" class="form-label" th:text="#{pickupdate}"></label>
+                            <input type="text" id="disabledPickUpDate" class="form-control" th:placeholder="${session.pickupDate}" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="disabledDropOffDate" class="form-label" th:text="#{dropoffdate}"></label>
+                            <input type="text" id="disabledDropOffDate" class="form-control" th:placeholder="${session.dropoffDate}" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="disabledPickUpCity" class="form-label" th:text="#{pickupcity}"></label>
+                            <input type="text" id="disabledPickUpCity" class="form-control" disabled th:value="${session.car.city.name}">
+                        </div>
+                    </div>
+                    <hr class="my-4">
+
+                    <h4 class="mb-3" th:text="#{payment}"></h4>
+
+
+                    <div class="row gy-3">
+                        <div class="col-md-6">
+                            <label for="cc_name" class="form-label" th:text="#{cardHolderName}"></label>
+                            <input name="cc_name" type="text" class="form-control" id="cc_name" required/>
+                            <small class="text-muted" th:text="#{cardHolderNameHelp}"></small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="cc_number" class="form-label" th:text="#{cardNumber}"></label>
+                            <input name="cc_number" type="text" class="form-control" id="cc_number" required/>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="cc_expiration" class="form-label" th:text="#{expiryDate}"></label>
+                            <input name="cc_expiration" type="text" class="form-control" id="cc_expiration" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Expiration date required
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="cc_cvv" class="form-label" th:text="#{cvv}"></label>
+                            <input name="cc_cvv" type="text" class="form-control" id="cc_cvv" placeholder="" required >
+                            <div class="invalid-feedback">
+                                Security code required
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <button class="w-100 btn btn-success btn" type="submit" th:text="#{book}"></button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+</body>
+</html>

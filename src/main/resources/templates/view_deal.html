@@ -12,17 +12,18 @@
 <div class="d-flex align-items-center justify-content-center">
     <div class="px-4 py-5 my-5 text-center">
         <div class="card mb-3">
-            <img src="${car.imageUrl}" class="d-block mx-auto mb-4" width="399" height="299">
+            <img th:src="@{${session.car.imageUrl}}" class="d-block mx-auto mb-4" width="399" height="299">
             <div class="card-body">
-                <h5 class="card-title lh-1"><fmt:message key="yourDeal"/></h5>
-                <p class="card-text lh-1"><fmt:message key="carModel"/> ${car.model}</p>
-                <p class="card-text lh-1"><fmt:message key="transmission"/> ${car.transmission}</p>
-                <p class="card-text lh-1"><fmt:message key="passengersPre"/> ${car.passengers}</p>
-                <p class="card-text lh-1"><fmt:message key="priceforoneday"/> ${car.price}$   <fmt:message key="priceforndays"/> ${days} <fmt:message key="days"/> <calc:totalPriceTag price="${car.price}" days="${days}"/>$</p>
-                <form method="post" action="${Path.SEARCH_CARS_PATH+=Path.VIEW_DEAL_PATH+=Path.BOOK_PATH}">
+                <h5 class="card-title lh-1" th:text="#{yourDeal}"></h5>
+                <p class="card-text lh-1" th:text="#{carModel} + ' ' + ${session.car.brand.name} + ' ' + ${session.car.model}"></p>
+                <p class="card-text lh-1" th:text="#{transmission} + ' ' + ${session.car.transmission}"></p>
+                <p class="card-text lh-1" th:text="#{passengersPre} + ' ' + ${session.car.passengers}"></p>
+                <p class="card-text lh-1" th:text="#{priceforoneday} + ' ' + ${session.car.priceForOneDay} + '$'"></p>
+                <p class="card-text lh-1" th:text="#{priceforndays} + ' ' + ${session.days} + ' ' + #{days} + ' ' + ${session.car.priceAllDays} + '$'"></p>
+                <form method="post" th:action="@{/search_cars/view_deal/book}">
                     <input value="true" type="checkbox" name="driver" class="form-check-input" id="checkBox">
-                    <label class="form-check-label" for="checkBox"><fmt:message key="personalDriver"/></label>
-                    <button type="submit" class="btn btn-success"><fmt:message key="goToBook"/></button>
+                    <label class="form-check-label" for="checkBox" th:text="#{personalDriver}"></label>
+                    <button type="submit" class="btn btn-success" th:text="#{goToBook}"></button>
                 </form>
             </div>
         </div>

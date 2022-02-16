@@ -4,7 +4,6 @@ import com.example.carrentalspringproject.model.entity.Brand;
 import com.example.carrentalspringproject.model.entity.Car;
 import com.example.carrentalspringproject.model.entity.Category;
 import com.example.carrentalspringproject.model.entity.City;
-import com.example.carrentalspringproject.model.entity.enums.Status;
 import com.example.carrentalspringproject.model.entity.enums.Transmission;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class SearchCarsDto {
+public class CarDto {
 
     private int id;
     private Brand brand;
@@ -27,9 +26,9 @@ public class SearchCarsDto {
     private Category category;
     private String imageUrl;
 
-    public SearchCarsDto(){}
+    public CarDto(){}
 
-    public SearchCarsDto(int id, Brand brand, String model, int passengers, int priceForOneDay, int priceAllDays, Transmission transmission, City city, Category category, String imageUrl) {
+    public CarDto(int id, Brand brand, String model, int passengers, int priceForOneDay, int priceAllDays, Transmission transmission, City city, Category category, String imageUrl) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -42,10 +41,10 @@ public class SearchCarsDto {
         this.imageUrl = imageUrl;
     }
 
-    public static List<SearchCarsDto> mapCarListToDtoList(List<Car> carList, long days){
-        List<SearchCarsDto> dtoList = new ArrayList<>();
+    public static List<CarDto> mapCarListToDtoList(List<Car> carList, long days){
+        List<CarDto> dtoList = new ArrayList<>();
         for (Car car: carList){
-            SearchCarsDto carsDto = new SearchCarsDto();
+            CarDto carsDto = new CarDto();
             carsDto.id = car.getId();
             carsDto.brand = car.getBrand();
             carsDto.model = car.getModel();
@@ -59,6 +58,35 @@ public class SearchCarsDto {
             dtoList.add(carsDto);
         }
         return dtoList;
+    }
+
+    public static CarDto mapCarToDto(Car car, long days){
+        CarDto carDto = new CarDto();
+        carDto.id = car.getId();
+        carDto.brand = car.getBrand();
+        carDto.model = car.getModel();
+        carDto.passengers = car.getPassengers();
+        carDto.priceForOneDay = car.getPrice();
+        carDto.priceAllDays = (int) (car.getPrice() * days);
+        carDto.transmission = car.getTransmission();
+        carDto.city = car.getCity();
+        carDto.category = car.getCategory();
+        carDto.imageUrl = car.getImageUrl();
+        return carDto;
+    }
+
+    public static Car mapDtoToCar(CarDto carDto){
+        Car car = new Car();
+        car.setId(carDto.getId());
+        car.setBrand(carDto.getBrand());
+        car.setModel(carDto.getModel());
+        car.setPassengers(carDto.getPassengers());
+        car.setPrice(carDto.getPriceForOneDay());
+        car.setTransmission(carDto.getTransmission());
+        car.setCity(carDto.getCity());
+        car.setCategory(carDto.getCategory());
+        car.setImageUrl(carDto.getImageUrl());
+        return car;
     }
 
     @Override

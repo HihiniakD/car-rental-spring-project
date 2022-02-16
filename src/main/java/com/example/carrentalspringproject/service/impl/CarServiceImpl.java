@@ -1,6 +1,7 @@
 package com.example.carrentalspringproject.service.impl;
 
-import com.example.carrentalspringproject.controller.dto.SearchCarsDto;
+import com.example.carrentalspringproject.controller.dto.CarDto;
+import com.example.carrentalspringproject.exception.ServiceException;
 import com.example.carrentalspringproject.model.entity.Car;
 import com.example.carrentalspringproject.model.entity.enums.Status;
 import com.example.carrentalspringproject.repos.CarRepository;
@@ -22,9 +23,9 @@ public class CarServiceImpl implements CarService {
     public CarServiceImpl(CarRepository carRepository) {this.carRepository = carRepository;}
 
     @Override
-    public List<SearchCarsDto> findAllAvailableCars(int brandId, int cityId, int categoryId,
-                                                    String pickUpDate, String dropOffDate,
-                                                    HttpSession session) {
+    public List<CarDto> findAllAvailableCars(int brandId, int cityId, int categoryId,
+                                             String pickUpDate, String dropOffDate,
+                                             HttpSession session) {
         long days = DateService.countDays(pickUpDate, dropOffDate);
         int statusId = Status.AVAILABLE.getStatus();
         session.setAttribute(PICKUP_DATE_PARAMETER, pickUpDate);
@@ -34,22 +35,42 @@ public class CarServiceImpl implements CarService {
         session.setAttribute(CITY_ID_PARAMETER, cityId);
         session.setAttribute(CATEGORY_ID_PARAMETER, categoryId);
         List<Car> carList = carRepository.findAllAvailableCars(brandId, cityId, categoryId, statusId);
-        return SearchCarsDto.mapCarListToDtoList(carList, days);
+        return CarDto.mapCarListToDtoList(carList, days);
     }
 
     @Override
-    public List<SearchCarsDto> findAllAvailableCarsSortedByPrice(int brandId, int cityId, int categoryId, HttpSession session) {
+    public List<CarDto> findAllAvailableCarsSortedByPrice(int brandId, int cityId, int categoryId, HttpSession session) {
         int statusId = Status.AVAILABLE.getStatus();
         long days = (long) session.getAttribute(DAYS_PARAMETER);
         List<Car> carList = carRepository.findAllAvailableCarsSortedByPrice(brandId, cityId, categoryId, statusId);
-        return SearchCarsDto.mapCarListToDtoList(carList, days);
+        return CarDto.mapCarListToDtoList(carList, days);
     }
 
     @Override
-    public List<SearchCarsDto> findAllAvailableCarsSortedByName(int brandId, int cityId, int categoryId, HttpSession session) {
+    public List<CarDto> findAllAvailableCarsSortedByName(int brandId, int cityId, int categoryId, HttpSession session) {
         int statusId = Status.AVAILABLE.getStatus();
         long days = (long) session.getAttribute(DAYS_PARAMETER);
         List<Car> carList = carRepository.findAllAvailableCarsSortedByName(brandId, cityId, categoryId, statusId);
-        return SearchCarsDto.mapCarListToDtoList(carList, days);
+        return CarDto.mapCarListToDtoList(carList, days);
+    }
+
+    @Override
+    public CarDto findCarById(int carId, long days) {
+        Car car = carRepository.findCarById(carId);
+        return CarDto.mapCarToDto(car, days);
+    }
+
+    @Override
+    public boolean carIsAvailable(int id) {
+        boolean isAvailable = carRepository.existsByIdAndStatus(id, Status.AVAILABLE);
+        System.out.println("IS AVAILABLE - " + isAvailable);
+        if (!isAvailable)
+            throw new ServiceException(CAR_NOT_AVAILABLE_ERROR);
+        return isAvailable;
+    }
+
+    @Override
+    public Boolean changeStatus(int id, Status status) {
+        return carRepository.changeStatus(id, status);
     }
 }

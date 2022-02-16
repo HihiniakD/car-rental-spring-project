@@ -9,4 +9,5 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository<Order, Integer> {
     @Query(value = "SELECT * FROM CarRental.order where user_id=?", nativeQuery = true)
     List<Order> findAllByUserId(int id);
+    Order save(Order order);
 }

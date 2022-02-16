@@ -24,11 +24,7 @@ public class City {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "city")
-    private List<Car> cars;
 
-    @OneToMany(mappedBy = "city")
-    private List<Order> orders;
 
     public City(){}
 
@@ -37,19 +33,8 @@ public class City {
         this.name = name;
     }
 
-    public void addCarToCity(Car car){
-        if (cars == null)
-            cars = new ArrayList<>();
-        cars.add(car);
-        car.setCity(this);
-    }
 
-    public void addOrderToCity(Order order){
-        if (orders == null)
-            orders = new ArrayList<>();
-        orders.add(order);
-        order.setCity(this);
-    }
+
 
     @Override
     public String toString() {

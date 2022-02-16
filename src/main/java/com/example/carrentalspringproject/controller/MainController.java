@@ -1,6 +1,6 @@
 package com.example.carrentalspringproject.controller;
 
-import com.example.carrentalspringproject.controller.dto.SearchCarsDto;
+import com.example.carrentalspringproject.controller.dto.CarDto;
 import com.example.carrentalspringproject.exception.ServiceException;
 import com.example.carrentalspringproject.model.entity.Brand;
 import com.example.carrentalspringproject.model.entity.Category;
@@ -51,7 +51,7 @@ public class MainController {
     public String searchCars(@RequestParam int brand, @RequestParam int city, @RequestParam int category,
                            @RequestParam String pickupDate, @RequestParam String dropoffDate,
                            HttpSession session, Model model, RedirectAttributes redirectAttributes){
-        List<SearchCarsDto> availableCars = null;
+        List<CarDto> availableCars = null;
         try{
             availableCars = carService.findAllAvailableCars(brand, city, category, pickupDate, dropoffDate, session);
         }catch (ServiceException exception){
@@ -67,7 +67,7 @@ public class MainController {
     @GetMapping("/search_cars/sortByPrice")
     public String searchCarsSortByPrice(@RequestParam int brand, @RequestParam int city, @RequestParam int category,
                                         HttpSession session, Model model){
-        List<SearchCarsDto> availableCars = carService.findAllAvailableCarsSortedByPrice(brand, city, category, session);
+        List<CarDto> availableCars = carService.findAllAvailableCarsSortedByPrice(brand, city, category, session);
         System.out.println(availableCars);
         model.addAttribute(CARS_PARAMETER, availableCars);
         return "search_cars";
@@ -76,7 +76,7 @@ public class MainController {
     @GetMapping("/search_cars/sortByName")
     public String searchCarsSortByName(@RequestParam int brand, @RequestParam int city, @RequestParam int category,
                                        HttpSession session, Model model){
-        List<SearchCarsDto> availableCars = carService.findAllAvailableCarsSortedByName(brand, city, category, session);
+        List<CarDto> availableCars = carService.findAllAvailableCarsSortedByName(brand, city, category, session);
         System.out.println(availableCars);
         model.addAttribute(CARS_PARAMETER, availableCars);
         return "search_cars";

@@ -68,4 +68,19 @@ public class Constants {
     public static final String MODEL_PARAMETER = "model";
     public static final String PASSENGERS_PARAMETER = "passengers";
 
+    //errors constants
+    public static final String PASSWORD_NOT_VALID = "passwordNotValid";
+    public static final String PHONE_NOT_VALID = "phoneNotValid";
+    public static final String USER_NOT_FOUND = "userNotFound";
+    public static final String DATA_NOT_VALID = "dataNotValid";
+    public static final String USER_BLOCKED = "userBlocked";
+    public static final String WRONG_PASSWORD = "wrongPassword";
+    public static final String OTHER_ERROR = "otherError";
+    public static final String CAR_NOT_AVAILABLE_ERROR = "carNotAvailable";
+    public static final String CC_NAME_NOT_VALID_ERROR = "ccNameNotValid";
+    public static final String CC_NUMBER_NOT_VALID_ERROR = "ccNumberNotValid";
+    public static final String CC_EXPIRATION_NOT_VALID_ERROR = "ccExpirationNotValid";
+    public static final String CC_CVV_NOT_VALID_ERROR = "ccCvvNotValid";
+    public static final String MUST_LOGIN = "mustLogin";
+
 }

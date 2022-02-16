@@ -42,8 +42,6 @@ public class User {
     @Column(name = "blocked")
     private boolean blocked;
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
 
     public User(){}
 
@@ -57,12 +55,6 @@ public class User {
         this.blocked = blocked;
     }
 
-    public void addOrderToUser(Order order){
-        if (orders == null)
-            orders = new ArrayList<>();
-        orders.add(order);
-        order.setUser(this);
-    }
 
     @Override
     public String toString() {

@@ -5,8 +5,11 @@ import com.example.carrentalspringproject.model.entity.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import javax.servlet.http.HttpSession;
+
 public interface UserService extends UserDetailsService {
     @Query(value = "SELECT * FROM carrental.user WHERE email=?", nativeQuery = true)
     User findByEmail(String email);
     User save(SignUpUserDto signUp);
+    User checkUsernameChange(HttpSession session, String name);
 }

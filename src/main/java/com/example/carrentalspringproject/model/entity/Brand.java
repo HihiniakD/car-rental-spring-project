@@ -24,9 +24,6 @@ public class Brand {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "brand")
-    private List<Car> cars;
-
     public Brand(){}
 
     public Brand(int id, String name) {
@@ -34,12 +31,6 @@ public class Brand {
         this.name = name;
     }
 
-    public void addCarToBrand(Car car){
-        if (cars == null)
-            cars = new ArrayList<>();
-        cars.add(car);
-        car.setBrand(this);
-    }
 
     @Override
     public String toString() {

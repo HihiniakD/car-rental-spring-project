@@ -1,6 +1,7 @@
 package com.example.carrentalspringproject.service.impl;
 
 import com.example.carrentalspringproject.controller.dto.SignUpUserDto;
+import com.example.carrentalspringproject.exception.ServiceException;
 import com.example.carrentalspringproject.model.entity.User;
 import com.example.carrentalspringproject.model.entity.enums.Role;
 import com.example.carrentalspringproject.repos.UserRepository;
@@ -13,9 +14,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import static com.example.carrentalspringproject.controller.Constants.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -44,6 +47,19 @@ public class UserServiceImpl implements UserService {
         user.setBlocked(false);
         user.setRole(Role.USER);
         return userRepository.save(user);
+    }
+
+    @Override
+    public User checkUsernameChange(HttpSession session, String name) {
+        if (name == null || name.isBlank())
+            throw new ServiceException(NAME_NOT_VALID);
+
+        User user = (User) session.getAttribute(USER_PARAMETER);
+        if (!user.getName().equals(name)){
+            userRepository.changeUserNameById(name, user.getId());
+            user.setName(name);
+        }
+        return user;
     }
 
     @Override
