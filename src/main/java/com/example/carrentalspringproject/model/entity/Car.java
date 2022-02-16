@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "car")
 public class Car {
@@ -80,5 +79,18 @@ public class Car {
             orders = new ArrayList<>();
         orders.add(order);
         order.setCar(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                ", passengers=" + passengers +
+                ", price=" + price +
+                ", status=" + status +
+                ", transmission=" + transmission +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }

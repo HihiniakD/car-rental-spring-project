@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "user")
 public class User {
@@ -63,5 +62,18 @@ public class User {
             orders = new ArrayList<>();
         orders.add(order);
         order.setUser(this);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", role=" + role +
+                ", blocked=" + blocked +
+                '}';
     }
 }

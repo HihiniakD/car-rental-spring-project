@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{searchcars}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white" th:insert="parts/header.html"> </header>
+
+<div class="text-center bg-light">
+   <a th:href="@{/search_cars/sortByPrice(brand=${session.brand_id}, city=${session.city_id}, category=${session.category_id})}"><button type="button" class="btn btn-danger btn-sm" th:text="#{sortByPrice}"></button></a>
+    <a th:href="@{/search_cars/sortByName(brand=${session.brand_id}, city=${session.city_id}, category=${session.category_id})}"><button type="button" class="btn btn-danger btn-sm" th:text="#{sortByName}"></button></a>
+</div>
+
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+
+
+                <div class="col" th:each="car : ${cars}">
+                    <div class="card shadow-sm">
+                        <img th:src="@{${car.imageUrl}}" class="img-fluid" alt="...">
+
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${car.getBrand().name} + ' ' + ${car.model}"></h5>
+                            <p class="card-subtitle mb-2 text-muted" th:text="#{priceforoneday} + ' ' + ${car.priceForOneDay} + '$'"></p>
+                            <p class="card-subtitle mb-2 text-muted" th:text="#{priceforndays} + ' ' + ${session.days} + ' ' + #{days} + ' ' + ${car.priceAllDays} + '$'"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a th:href="@{/search_cars/view_deal(id=${car.id})}"><button type="button" class="btn btn-sm btn-success" th:text="#{viewDeal}"></button></a>
+<!--                                    <button onclick="location.href='/viewDeals'" type="button" class="btn btn-sm btn-success" th:text="#{viewDeal}"></button>-->
+                                    <button type="button" class="btn btn-sm btn-secondary" disabled th:text="${car.transmission}"></button>
+                                    <button type="button" class="btn btn-sm btn-secondary" disabled th:text="${car.passengers} + ' ' + #{passengers}"></button>
+                                    <button type="button" class="btn btn-sm btn-secondary" disabled th:text="${car.category.name}"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+</body>
+</html>

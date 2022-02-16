@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "brand")
 public class Brand {
@@ -40,5 +39,13 @@ public class Brand {
             cars = new ArrayList<>();
         cars.add(car);
         car.setBrand(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Brand{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

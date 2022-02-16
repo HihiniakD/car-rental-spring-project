@@ -1,7 +1,48 @@
 package com.example.carrentalspringproject.controller;
 
+import com.example.carrentalspringproject.controller.dto.SignUpUserDto;
+import com.example.carrentalspringproject.model.entity.User;
+import com.example.carrentalspringproject.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import static com.example.carrentalspringproject.controller.Constants.*;
 
 @Controller
+@RequestMapping("/sign_up")
 public class SignUpController {
+
+    @Autowired
+    private UserService userService;
+
+    @ModelAttribute("user")
+    public SignUpUserDto userRegistrationDto() {
+        return new SignUpUserDto();
+    }
+
+    @GetMapping
+    public String signUp(Model model) {return "sign_up";}
+
+
+    @PostMapping
+    public String processSignUp(@ModelAttribute("user") @Valid SignUpUserDto userDto,
+                                BindingResult result) {
+
+        User user = userService.findByEmail(userDto.getEmail());
+        if(user != null) {
+            result.rejectValue("emailEx", null, EMAIL_EXISTS);
+        }
+        if (result.hasErrors()){
+            return "sign_up";
+        }
+        userService.save(userDto);
+        return "redirect:/login?success";
+    }
 }

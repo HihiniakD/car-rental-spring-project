@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "category")
 public class Category {
@@ -40,5 +39,13 @@ public class Category {
             cars = new ArrayList<>();
         cars.add(car);
         car.setCategory(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "order")
 public class Order {
@@ -45,6 +44,7 @@ public class Order {
     private int totalPrice;
 
     @Convert(converter = StatusConverter.class)
+    @Column(name = "status_id")
     private Status status;
 
     @Column(name = "driver")
@@ -66,5 +66,18 @@ public class Order {
         this.status = status;
         this.withDriver = withDriver;
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", pickUpDate=" + pickUpDate +
+                ", dropOffDate=" + dropOffDate +
+                ", totalPrice=" + totalPrice +
+                ", status=" + status +
+                ", withDriver=" + withDriver +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

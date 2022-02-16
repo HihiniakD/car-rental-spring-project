@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{signup}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white" th:insert="parts/header.html"> </header>
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-3">
+                    <img src="https://cdn.worldvectorlogo.com/logos/rent-a-car-systeme.svg" alt="logo" width="100">
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4" th:text="#{signup}"></h1>
+
+
+
+                        <form th:action="@{/sign_up}" th:object="${user}" method="post">
+
+                            <p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+                               th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+                                error</p>
+
+
+                            <div class="mb-3" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+                                <label class="mb-2 text-muted" for="email" th:text="#{email}"></label>
+                                <input id="email" type="email" class="form-control" name="email" th:field="*{email}" required/>
+                                <p class="error-message"
+                                   th:each="error : ${#fields.errors('email')}"
+                                   th:text="${error}">Validation error</p>
+                            </div>
+
+                            <div class="mb-3" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" for="password" th:text="#{password}"></label>
+                                </div>
+                                <input id="password" type="password" class="form-control" name="password" th:field="*{password}" required/>
+                                <p class="text-danger fw-bold"
+                                   th:each="error : ${#fields.errors('password')}" th:text="#{${error}}">Validation
+                                    error</p>
+                                <div id="passwordHelp" class="form-text" th:text="#{passwordrules}"></div>
+                            </div>
+
+
+                            <div class="mb-3" th:classappend="${#fields.hasErrors('name')}? 'has-error':''">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" for="name" th:text="#{name}"></label>
+                                </div>
+                                <input id="name" type="text" class="form-control" name="name" th:field="*{name}" required/>
+                                <p class="text-danger fw-bold"
+                                   th:each="error : ${#fields.errors('name')}"
+                                   th:text="#{${error}}">Validation error</p>
+                            </div>
+
+
+                            <div class="mb-3" th:classappend="${#fields.hasErrors('phone')}? 'has-error':''">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" for="phone" th:text="#{number}"></label>
+                                </div>
+                                <input id="phone" type="text" inputmode="numeric" class="form-control" name="phone" th:field="*{phone}" required/>
+                                <p class="text-danger fw-bold"
+                                   th:each="error : ${#fields.errors('phone')}"
+                                   th:text="#{${error}}">Validation error</p>
+                                <div id="phoneHelp" class="form-text" th:text="#{phonerules}"></div>
+                            </div>
+
+
+                            <div class="d-flex align-items-center">
+                                <button type="submit" class="btn btn-success ms-auto" th:text="#{signup}">
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center mt-5 text-muted" th:text="#{copyright}">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
