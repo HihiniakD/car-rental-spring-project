@@ -83,4 +83,9 @@ public class Constants {
     public static final String CC_CVV_NOT_VALID_ERROR = "ccCvvNotValid";
     public static final String MUST_LOGIN = "mustLogin";
 
+
+    public static final String SUCCESS_BOOKING_MESSAGE = "successBookingMessage";
+    public static final String SUCCESS_SIGN_UP_MESSAGE = "successSignUpMessage";
+    public static final String SUCCESS_MESSAGE = "successMessage";
+    public static final String FAIL_MESSAGE = "failMessage";
 }

@@ -16,11 +16,9 @@
 
 
 
-            <c:choose>
-                <c:when test="${requestScope.error != null}">
-                    <div style="text-align: center;"><p class="text-danger fw-bold"><fmt:message key="${requestScope.error}"/></p></div>
-                </c:when>
-            </c:choose>
+            <div th:if="${error}">
+                <div class="alert alert-danger" th:text="#{${error}}"></div>
+            </div>
 
 
 

@@ -10,6 +10,7 @@ import com.example.carrentalspringproject.service.CarService;
 import com.example.carrentalspringproject.service.CategoryService;
 import com.example.carrentalspringproject.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +56,7 @@ public class MainController {
         try{
             availableCars = carService.findAllAvailableCars(brand, city, category, pickupDate, dropoffDate, session);
         }catch (ServiceException exception){
-            redirectAttributes.addFlashAttribute(DATE_NOT_VALID, exception.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_PARAMETER, exception.getMessage());
             return "redirect:/";
         }
 
@@ -85,6 +86,20 @@ public class MainController {
     @GetMapping("/login")
     public String login(Model model){
         return "login";
+    }
+
+    @GetMapping("/success")
+    public String loginPageRedirect(Authentication authResult){
+        String role = authResult.getAuthorities().toString().strip();
+        System.out.println("ROLE - " + role);
+        String url = "";
+        switch (role){
+            case "[ADMIN]": url = "/admin_page"; break;
+            case "[MANAGER]":url = "/manager_page"; break;
+            default: url = "/my_booking";
+        }
+        String redirectUrl = "redirect:" + url;
+        return redirectUrl;
     }
 
 

@@ -2,9 +2,10 @@ package com.example.carrentalspringproject.repos;
 
 import com.example.carrentalspringproject.model.entity.Car;
 import com.example.carrentalspringproject.model.entity.enums.Status;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,7 +18,9 @@ public interface CarRepository extends CrudRepository<Car, Integer> {
     List<Car> findAllAvailableCarsSortedByName(int brandId, int cityId, int categoryId, int statusId);
     Car findCarById(int carId);
     boolean existsByIdAndStatus(int carId, Status status);
+    @Transactional
+    @Modifying
     @Query(value = "UPDATE CarRental.car SET status_id=? WHERE id=?", nativeQuery = true)
-    boolean changeStatus(int statusId, Status status);
+    void changeStatus(int statusId, int carId);
 
 }

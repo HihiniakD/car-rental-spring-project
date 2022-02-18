@@ -70,7 +70,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Boolean changeStatus(int id, Status status) {
-        return carRepository.changeStatus(id, status);
+    public boolean changeStatus(int id, Status status) {
+        carRepository.changeStatus(status.getStatus(), id);
+        return true;
     }
 }

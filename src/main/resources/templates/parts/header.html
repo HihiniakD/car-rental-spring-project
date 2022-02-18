@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
             <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
@@ -9,20 +9,16 @@
         </ul>
 
         <div class="text-end">
-                    <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='http://localhost:8080/?localeData=ua'">Українська версія</button>
-                    <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='http://localhost:8080/?localeData=en'">English version</button>
+                    <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='?lang=ua'">Українська версія</button>
+                    <button type="button" class="btn btn-secondary me-2" onclick="window.location.href='?lang=en'">English version</button>
 
-            </c:choose>
-            <c:choose>
-                <c:when test="${sessionScope.user == null}">
-                    <button onclick="location.href='/login'"type="button" class="btn btn-success me-2" th:text="#{login}"></button>
-                    <button onclick="location.href='/sign_up'" type="button" class="btn btn-warning me-2" th:text="#{signup}"></button>
-                </c:when>
-                <c:otherwise>
-                    <button onclick="location.href='/my_booking'"type="button" class="btn btn-light me-2" th:text="#{myBooking}"></button>
-                    <button onclick="location.href='/logout'"type="button" class="btn btn-success me-2" th:text="#{logout}"></button>
-                </c:otherwise>
-            </c:choose>
+
+                    <button sec:authorize="isAnonymous()" onclick="location.href='/login'"type="button" class="btn btn-success me-2" th:text="#{login}"></button>
+                    <button sec:authorize="isAnonymous()" onclick="location.href='/sign_up'" type="button" class="btn btn-warning me-2" th:text="#{signup}"></button>
+
+                    <button sec:authorize="isAuthenticated()" onclick="location.href='/my_booking'"type="button" class="btn btn-light me-2" th:text="#{myBooking}"></button>
+                    <button sec:authorize="isAuthenticated()" onclick="location.href='/logout'"type="button" class="btn btn-success me-2" th:text="#{logout}"></button>
+
         </div>
     </div>
 </div>

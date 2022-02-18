@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{declineRequest}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white" th:insert="parts/manager_header.html"> </header>
+
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-3">
+                    <img src="https://cdn.worldvectorlogo.com/logos/rent-a-car-systeme.svg" alt="logo" width="100">
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4" th:text="#{declineRequest}"></h1>
+                        <form method="POST" th:action="@{/manager_page/declineBooking/process}">
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="id" th:text="#{orderId}"></label>
+                                <input id="id" type="text" class="form-control" name="id" required th:value="${order.id}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="carName" th:text="#{carName}"></label>
+                                <input id="carName" type="text" class="form-control" name="carName" required th:value="${order.car.brand.name} + ' ' + ${order.car.model}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="carId" th:text="#{carId}"></label>
+                                <input id="carId" type="text" class="form-control" name="carId" required th:value="${order.car.id}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="clientName" th:text="#{clientFullName}"></label>
+                                <input id="clientName" type="text" class="form-control" name="clientName" required th:value="${order.user.name}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" for="clientName" th:text="#{pickupcity}"></label>
+                                <input id="city" type="text" class="form-control" name="city" required th:value="${order.city.name}" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" for="comment" th:text="#{comment}"></label>
+                                </div>
+                                <input id="comment" type="text" class="form-control" name="comment" required th:value="${order.comment}">
+                            </div>
+
+                            <div class="d-flex align-items-center">
+
+                                <button type="submit" class="btn btn-success ms-auto" th:text="#{declineRequest}">
+                                </button>
+                            </div>
+                        </form:hidden>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

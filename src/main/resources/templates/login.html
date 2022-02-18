@@ -26,15 +26,15 @@
                         <form method="POST" th:action="@{/login}">
 
                             <div th:if="${param.error}">
-                                <div class="alert alert-danger">Incorrect credentials or user is blocked</div>
+                                <div class="alert alert-danger"  th:text="#{loginErrorMessage}"></div>
                             </div>
 
                             <div th:if="${param.logout}">
-                                <div class="alert alert-info">You have been logged out.</div>
+                                <div class="alert alert-info" th:text="#{logOutMessage}"></div>
                             </div>
 
-                            <div th:if="${param.success}">
-                                <div class="alert alert-info">Registered</div>
+                            <div th:if="${success_message}">
+                                <div class="alert alert-success" th:text="#{registeredMessage}"></div>
                             </div>
 
 

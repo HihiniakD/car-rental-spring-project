@@ -11,6 +11,8 @@ import com.example.carrentalspringproject.service.util.PriceService;
 import com.example.carrentalspringproject.service.util.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import static com.example.carrentalspringproject.controller.Constants.*;
 
 import java.time.LocalDate;
@@ -60,6 +62,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public Order processOrder(User user, CarDto car, String pickUpDate, String dropOffDate, long totalPrice, boolean withDriver) {
         Order order = new Order();
 
@@ -71,9 +74,68 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalPrice((int) totalPrice);
         order.setStatus(Status.PROCESSING);
         order.setWithDriver(withDriver);
-        order.setComment("");
         System.out.println(order);
 
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> findAllNewOrders() {
+        return orderRepository.findAllByStatus(Status.PROCESSING);
+    }
+
+    @Override
+    public List<Order> findAllInProgressOrders() {
+        return orderRepository.findAllByStatus(Status.APPROVED);
+    }
+
+    @Override
+    public List<Order> findAllFinishedOrders() {
+        return orderRepository.findAllByStatus(Status.DONE);
+    }
+
+    @Override
+    public List<Order> findAllDeclinedOrders() {
+        return orderRepository.findAllByStatus(Status.CANCELED);
+    }
+
+    @Override
+    @Transactional
+    public void changeStatusById(int id, Status status) {
+        orderRepository.changeStatusById(status.getStatus(), id);
+    }
+
+    @Override
+    public Order findById(int id) {
+        return orderRepository.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public void declineOrder(int id, String comment) {
+        orderRepository.changeStatusByIdAndSetComment(Status.CANCELED.getStatus(), comment, id);
+    }
+
+    @Override
+    @Transactional
+    public void finishOrder(int id, String comment, String penalty) {
+        validatePenaltyFee(penalty);
+        int penaltyFee = Integer.parseInt(penalty);
+        Order order = orderRepository.findById(id);
+        int newTotalPrice = order.getTotalPrice() + penaltyFee;
+        orderRepository.changeStatusAndSetCommentAndPrice(comment,newTotalPrice, Status.DONE.getStatus(), id);
+    }
+
+
+    public boolean validatePenaltyFee(String penaltyFee) {
+        if (penaltyFee == null || penaltyFee.isBlank())
+            throw new ServiceException(FAIL_MESSAGE);
+
+        try {
+            Integer.parseInt(penaltyFee);
+        }catch (NumberFormatException exception){
+            throw new ServiceException(FAIL_MESSAGE);
+        }
+        return true;
     }
 }

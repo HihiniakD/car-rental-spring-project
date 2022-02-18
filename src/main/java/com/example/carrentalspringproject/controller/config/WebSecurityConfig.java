@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/", "/search_cars/**", "/sign_up").permitAll().
                 anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/my_booking", true).permitAll().and().logout().invalidateHttpSession(true).
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/success", true).permitAll().and().logout().invalidateHttpSession(true).
         clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).
         logoutSuccessUrl("/login?logout").permitAll();
     }

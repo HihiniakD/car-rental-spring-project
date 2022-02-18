@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User checkUsernameChange(HttpSession session, String name) {
         if (name == null || name.isBlank())
             throw new ServiceException(NAME_NOT_VALID);
@@ -60,6 +62,29 @@ public class UserServiceImpl implements UserService {
             user.setName(name);
         }
         return user;
+    }
+
+    @Override
+    public List<User> findByRole(Role role) {
+        return userRepository.findUsersByRole(role);
+    }
+
+    @Override
+    @Transactional
+    public void changeBlockedStatus(int userId, boolean blocked) {
+        userRepository.changeBlockedStatusById(!blocked, userId);
+    }
+
+    @Override
+    public User createManager(SignUpUserDto manager) {
+        User user = new User();
+        user.setEmail(manager.getEmail());
+        user.setPassword(passwordEncoder.encode(manager.getPassword()));
+        user.setName(manager.getName());
+        user.setPhone(manager.getPhone());
+        user.setBlocked(false);
+        user.setRole(Role.MANAGER);
+        return userRepository.save(user);
     }
 
     @Override

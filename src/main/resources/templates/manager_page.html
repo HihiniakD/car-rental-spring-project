@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{managerPage}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white" th:insert="parts/manager_header.html"> </header>
+
+<div class="container fluid">
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successMessage}">
+        <p th:text="#{${successMessage}}"></p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${failMessage}">
+        <p th:text="#{${failMessage}}"></p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="py-3 text-center">
+        <h3 th:text="#{newBookingRequests}"></h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-light">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{orderId}"></th>
+                <th scope="col" th:text="#{clientFullName}"></th>
+                <th scope="col" th:text="#{carName}"></th>
+                <th scope="col" th:text="#{pickupcity}"></th>
+                <th scope="col" th:text="#{pickupdate}"></th>
+                <th scope="col" th:text="#{dropoffdate}"></th>
+                <th scope="col" th:text="#{totalPrice}"></th>
+                <th scope="col" th:text="#{status}"></th>
+                <th scope="col" th:text="#{personalDriver}"></th>
+                <th scope="col" th:text="#{comment}"></th>
+                <th scope="col" th:text="#{actions}"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="newOrder : ${newOrders}">
+                    <td th:text="${newOrder.id}"></td>
+                    <td th:text="${newOrder.user.name}"></td>
+                    <td th:text="${newOrder.car.brand.name} + ' ' + ${newOrder.car.model}"></td>
+                    <td th:text="${newOrder.city.name}"></td>
+                    <td th:text="${newOrder.pickUpDate}"></td>
+                    <td th:text="${newOrder.dropOffDate}"></td>
+                    <td th:text="${newOrder.totalPrice}"></td>
+                    <td th:text="${newOrder.status.name()}"></td>
+                    <td th:text="${newOrder.withDriver}"></td>
+                    <td th:text="${newOrder.comment}"></td>
+                    <td>
+                        <a th:href="@{/manager_page/approveBooking(id=${newOrder.id})}" th:text="#{approveRequest}"></a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/manager_page/declineBooking(id=${newOrder.id})}" th:text="#{declineRequest}"></a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="py-3 text-center">
+        <h3 th:text="#{bookingsInProgress}"></h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-light">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{orderId}"></th>
+                <th scope="col" th:text="#{clientFullName}"></th>
+                <th scope="col" th:text="#{carName}"></th>
+                <th scope="col" th:text="#{pickupcity}"></th>
+                <th scope="col" th:text="#{pickupdate}"></th>
+                <th scope="col" th:text="#{dropoffdate}"></th>
+                <th scope="col" th:text="#{totalPrice}"></th>
+                <th scope="col" th:text="#{status}"></th>
+                <th scope="col" th:text="#{personalDriver}"></th>
+                <th scope="col" th:text="#{comment}"></th>
+                <th scope="col" th:text="#{actions}"></th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each="orderInProgress : ${ordersInProgress}">
+                    <td th:text="${orderInProgress.id}"></td>
+                    <td th:text="${orderInProgress.user.name}"></td>
+                    <td th:text="${orderInProgress.car.brand.name} + ' ' + ${orderInProgress.car.model}"></td>
+                    <td th:text="${orderInProgress.city.name}"></td>
+                    <td th:text="${orderInProgress.pickUpDate}"></td>
+                    <td th:text="${orderInProgress.dropOffDate}"></td>
+                    <td th:text="${orderInProgress.totalPrice}"></td>
+                    <td th:text="${orderInProgress.status.name()}"></td>
+                    <td th:text="${orderInProgress.withDriver}"></td>
+                    <td th:text="${orderInProgress.comment}"></td>
+                    <td>
+                        <a th:href="@{/manager_page/finishBooking(id=${orderInProgress.id})}" th:text="#{finishBooking}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="py-3 text-center">
+        <h3 th:text="#{finishedBookings}"></h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-light">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{orderId}"></th>
+                <th scope="col" th:text="#{clientFullName}"></th>
+                <th scope="col" th:text="#{carName}"></th>
+                <th scope="col" th:text="#{pickupcity}"></th>
+                <th scope="col" th:text="#{pickupdate}"></th>
+                <th scope="col" th:text="#{dropoffdate}"></th>
+                <th scope="col" th:text="#{totalPrice}"></th>
+                <th scope="col" th:text="#{status}"></th>
+                <th scope="col" th:text="#{personalDriver}"></th>
+                <th scope="col" th:text="#{comment}"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="finishedOrder : ${finishedOrders}">
+                    <td th:text="${finishedOrder.id}"></td>
+                    <td th:text="${finishedOrder.user.name}"></td>
+                    <td th:text="${finishedOrder.car.brand.name} + ' ' + ${finishedOrder.car.model}"></td>
+                    <td th:text="${finishedOrder.city.name}"></td>
+                    <td th:text="${finishedOrder.pickUpDate}"></td>
+                    <td th:text="${finishedOrder.dropOffDate}"></td>
+                    <td th:text="${finishedOrder.totalPrice}"></td>
+                    <td th:text="${finishedOrder.status.name()}"></td>
+                    <td th:text="${finishedOrder.withDriver}"></td>
+                    <td th:text="${finishedOrder.comment}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="py-3 text-center">
+        <h3 th:text="#{declinedBookings}"></h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-light">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{orderId}"></th>
+                <th scope="col" th:text="#{clientFullName}"></th>
+                <th scope="col" th:text="#{carName}"></th>
+                <th scope="col" th:text="#{pickupcity}"></th>
+                <th scope="col" th:text="#{pickupdate}"></th>
+                <th scope="col" th:text="#{dropoffdate}"></th>
+                <th scope="col" th:text="#{totalPrice}"></th>
+                <th scope="col" th:text="#{status}"></th>
+                <th scope="col" th:text="#{personalDriver}"></th>
+                <th scope="col" th:text="#{comment}"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="declinedOrder : ${declinedOrders}">
+                    <td th:text="${declinedOrder.id}"></td>
+                    <td th:text="${declinedOrder.user.name}"></td>
+                    <td th:text="${declinedOrder.car.brand.name} + ' ' + ${declinedOrder.car.model}"></td>
+                    <td th:text="${declinedOrder.city.name}"></td>
+                    <td th:text="${declinedOrder.pickUpDate}"></td>
+                    <td th:text="${declinedOrder.dropOffDate}"></td>
+                    <td th:text="${declinedOrder.totalPrice}"></td>
+                    <td th:text="${declinedOrder.status.name()}"></td>
+                    <td th:text="${declinedOrder.withDriver}"></td>
+                    <td th:text="${declinedOrder.comment}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

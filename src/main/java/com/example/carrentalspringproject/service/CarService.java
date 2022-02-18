@@ -1,6 +1,7 @@
 package com.example.carrentalspringproject.service;
 
 import com.example.carrentalspringproject.controller.dto.CarDto;
+import com.example.carrentalspringproject.model.entity.Car;
 import com.example.carrentalspringproject.model.entity.enums.Status;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,7 @@ public interface CarService {
                                                   HttpSession session);
     CarDto findCarById(int carId, long days);
     boolean carIsAvailable(int id);
-    Boolean changeStatus(int id, Status status);
+    boolean changeStatus(int id, Status status);
 
 
 }

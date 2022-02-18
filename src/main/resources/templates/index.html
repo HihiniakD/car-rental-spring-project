@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{maintitle}"></title>
@@ -18,8 +18,8 @@
                     <div class="card-body p-5">
                         <h1 class="fs-4 card-title fw-bold mb-4" th:text="#{greeting}"></h1>
                         <form method="GET" action="/search_cars">
-                            <div th:if="${dateNotValid}">
-                                <div class="alert alert-danger" th:text="#{dateNotValid}"></div>
+                            <div th:if="${error}">
+                                <div class="alert alert-danger" th:text="#{${error}}"></div>
                             </div>
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" th:text="#{pickupcity}"></label>

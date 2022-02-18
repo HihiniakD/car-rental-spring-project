@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -46,10 +46,10 @@ public class Order {
     @Column(name = "status_id")
     private Status status;
 
-    @Column(name = "driver")
+    @Column(name = "driver", columnDefinition="BIT")
     private boolean withDriver;
 
-    @Column(name = "comment")
+    @Column(name = "comments")
     private String comment;
 
     public Order(){}

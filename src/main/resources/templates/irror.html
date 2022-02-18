@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{login}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white" th:insert="parts/header.html"> </header>
+
+
+<div class="d-flex justify-content-center align-items-center" id="main">
+    <h1 class="mr-3 pr-3 align-top border-right inline-block align-content-center" th:text="#{ooops}"></h1>
+    <div class="inline-block align-middle">
+        <h2 class="font-weight-normal lead" id="desc" th:text="#{somethingWentWrong}"></h2>
+    </div>
+</div>
+
+</body>
+</html>

@@ -15,14 +15,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import static com.example.carrentalspringproject.controller.Constants.*;
@@ -88,7 +87,7 @@ public class UserController {
                                  @RequestParam(name = "cc_number") String ccNumber,
                                  @RequestParam(name = "cc_expiration") String ccExp,
                                  @RequestParam(name = "cc_cvv") String ccCvv,
-                                 HttpSession session, HttpServletRequest request){
+                                 HttpSession session, Model model, RedirectAttributes redirectAttributes){
         CarDto carDto = (CarDto) session.getAttribute(CAR_PARAMETER);
         long totalPrice = (long) session.getAttribute(TOTAL_PRICE_PARAMETER);
         String pickUpDate = (String) session.getAttribute(PICKUP_DATE_PARAMETER);
@@ -99,15 +98,15 @@ public class UserController {
         try{
             orderService.validateOrderPayment(ccName, ccNumber, ccExp, ccCvv);
         }catch (ServiceException exception){
-            request.setAttribute(ERROR_PARAMETER, exception.getMessage());
+            System.out.println(exception.getMessage());
+            model.addAttribute(ERROR_PARAMETER, exception.getMessage());
             return "book";
         }
 
         try{
             carService.carIsAvailable(carDto.getId());
         }catch (ServiceException exception){
-            //redirect to main page
-            request.setAttribute(ERROR_PARAMETER, exception.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_PARAMETER, exception.getMessage());
             return "redirect:/";
         }
 
@@ -115,15 +114,13 @@ public class UserController {
             user = userService.checkUsernameChange(session, name);
             session.setAttribute(USER_PARAMETER, user);
         }catch (ServiceException exception){
-            request.setAttribute(ERROR_PARAMETER, exception.getMessage());
+            model.addAttribute(ERROR_PARAMETER, exception.getMessage());
             return "book";
         }
-        boolean isProcessed = false;
 
         orderService.processOrder(user, carDto, pickUpDate, dropOffDate, totalPrice, withDriver);
         carService.changeStatus(carDto.getId(), Status.BUSY);
-        //redirect with success
-        session.setAttribute(SUCCESS_MESSAGE_PARAMETER, "some text");
+        redirectAttributes.addFlashAttribute(SUCCESS_MESSAGE_PARAMETER, SUCCESS_BOOKING_MESSAGE);
         return "redirect:/my_booking";
 
     }

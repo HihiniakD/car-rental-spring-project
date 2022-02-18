@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import static com.example.carrentalspringproject.controller.Constants.*;
@@ -33,16 +34,18 @@ public class SignUpController {
 
     @PostMapping
     public String processSignUp(@ModelAttribute("user") @Valid SignUpUserDto userDto,
-                                BindingResult result) {
+                                BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 
         User user = userService.findByEmail(userDto.getEmail());
         if(user != null) {
-            result.rejectValue("emailEx", null, EMAIL_EXISTS);
+            model.addAttribute(ERROR_PARAMETER, EMAIL_EXISTS);
+            return "sign_up";
         }
         if (result.hasErrors()){
             return "sign_up";
         }
         userService.save(userDto);
+        redirectAttributes.addFlashAttribute(SUCCESS_MESSAGE_PARAMETER, SUCCESS_BOOKING_MESSAGE);
         return "redirect:/login?success";
     }
 }
