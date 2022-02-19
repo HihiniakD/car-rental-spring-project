@@ -3,11 +3,9 @@ package com.example.carrentalspringproject.model.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Getter
 @Setter
@@ -24,17 +22,12 @@ public class City {
     @Column(name = "name")
     private String name;
 
-
-
     public City(){}
 
     public City(int id, String name) {
         this.id = id;
         this.name = name;
     }
-
-
-
 
     @Override
     public String toString() {

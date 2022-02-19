@@ -37,6 +37,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/my_booking")
     public String showMyBooking(Model model, HttpSession session){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -45,13 +46,11 @@ public class UserController {
         authentication.getAuthorities().stream().map(role -> list.add(role));
         User user = userService.findByEmail(email);
         List<Order> userOrders = orderService.findAllByUserId(user.getId());
-        System.out.println(userOrders);
-        model.addAttribute("orders", userOrders);
+        model.addAttribute(ORDERS_PARAMETER, userOrders);
         session.setAttribute("user", user);
-        System.out.println(session.getAttribute("user") + " USER FROM SESSION");
-
         return "my_booking";
     }
+
 
     @GetMapping("/search_cars/view_deal")
     public String showViewDeal(@RequestParam int id, Model model, HttpSession session){
@@ -60,6 +59,7 @@ public class UserController {
         session.setAttribute(CAR_PARAMETER, car);
         return "view_deal";
     }
+
 
     @PostMapping("/search_cars/view_deal/book")
     public String showBookPage(@RequestParam(required = false) String driver, HttpServletRequest request, HttpSession session){
@@ -78,9 +78,9 @@ public class UserController {
         session.setAttribute(CAR_RENTAL_PRICE_PARAMETER, carRentPrice);
         long totalPrice = carRentPrice + driverPrice;
         session.setAttribute(TOTAL_PRICE_PARAMETER, totalPrice);
-
         return "book";
     }
+
 
     @PostMapping("/search_cars/view_deal/book/processBooking")
     public String processBooking(@RequestParam String name, @RequestParam(name = "cc_name") String ccName,
@@ -94,11 +94,9 @@ public class UserController {
         String dropOffDate = (String) session.getAttribute(DROPOFF_DATE_PARAMETER);
         boolean withDriver = !(session.getAttribute(DRIVER_PARAMETER) == null);
         User user = null;
-
         try{
             orderService.validateOrderPayment(ccName, ccNumber, ccExp, ccCvv);
         }catch (ServiceException exception){
-            System.out.println(exception.getMessage());
             model.addAttribute(ERROR_PARAMETER, exception.getMessage());
             return "book";
         }
@@ -117,12 +115,9 @@ public class UserController {
             model.addAttribute(ERROR_PARAMETER, exception.getMessage());
             return "book";
         }
-
         orderService.processOrder(user, carDto, pickUpDate, dropOffDate, totalPrice, withDriver);
         carService.changeStatus(carDto.getId(), Status.BUSY);
         redirectAttributes.addFlashAttribute(SUCCESS_MESSAGE_PARAMETER, SUCCESS_BOOKING_MESSAGE);
         return "redirect:/my_booking";
-
     }
-
 }

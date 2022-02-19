@@ -7,6 +7,9 @@ import com.example.carrentalspringproject.model.entity.enums.Role;
 import com.example.carrentalspringproject.repos.UserRepository;
 import com.example.carrentalspringproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +41,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+
     @Override
     public User save(SignUpUserDto signUp) {
         User user = new User();
@@ -49,6 +53,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(Role.USER);
         return userRepository.save(user);
     }
+
 
     @Override
     @Transactional
@@ -64,16 +69,19 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+
     @Override
     public List<User> findByRole(Role role) {
         return userRepository.findUsersByRole(role);
     }
+
 
     @Override
     @Transactional
     public void changeBlockedStatus(int userId, boolean blocked) {
         userRepository.changeBlockedStatusById(!blocked, userId);
     }
+
 
     @Override
     public User createManager(SignUpUserDto manager) {
@@ -87,17 +95,24 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+
+    @Override
+    public Page<User> findUserPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return userRepository.findAll(pageable);
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("EMAIL  -  " + email);
         User user = userRepository.findByEmail(email);
-        System.out.println(user);
         if (user == null || user.isBlocked()) {
             throw new UsernameNotFoundException("Invalid username or password");
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(), mapRoleToAuthorities(user.getRole()));
     }
+
 
     private Collection < ? extends GrantedAuthority > mapRoleToAuthorities(Role userRole) {
         List<SimpleGrantedAuthority> list = new ArrayList<>();

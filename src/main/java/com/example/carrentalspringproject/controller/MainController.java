@@ -35,6 +35,7 @@ public class MainController {
     @Autowired
     private CarService carService;
 
+
     @GetMapping("/")
     public String mainPage(Model model){
         List<Brand> brands = brandService.findAll();
@@ -48,6 +49,7 @@ public class MainController {
         return "index";
     }
 
+
     @GetMapping("/search_cars")
     public String searchCars(@RequestParam int brand, @RequestParam int city, @RequestParam int category,
                            @RequestParam String pickupDate, @RequestParam String dropoffDate,
@@ -59,39 +61,38 @@ public class MainController {
             redirectAttributes.addFlashAttribute(ERROR_PARAMETER, exception.getMessage());
             return "redirect:/";
         }
-
-        System.out.println(availableCars);
         model.addAttribute(CARS_PARAMETER, availableCars);
         return "search_cars";
     }
+
 
     @GetMapping("/search_cars/sortByPrice")
     public String searchCarsSortByPrice(@RequestParam int brand, @RequestParam int city, @RequestParam int category,
                                         HttpSession session, Model model){
         List<CarDto> availableCars = carService.findAllAvailableCarsSortedByPrice(brand, city, category, session);
-        System.out.println(availableCars);
         model.addAttribute(CARS_PARAMETER, availableCars);
         return "search_cars";
     }
+
 
     @GetMapping("/search_cars/sortByName")
     public String searchCarsSortByName(@RequestParam int brand, @RequestParam int city, @RequestParam int category,
                                        HttpSession session, Model model){
         List<CarDto> availableCars = carService.findAllAvailableCarsSortedByName(brand, city, category, session);
-        System.out.println(availableCars);
         model.addAttribute(CARS_PARAMETER, availableCars);
         return "search_cars";
     }
 
+
     @GetMapping("/login")
-    public String login(Model model){
+    public String login(){
         return "login";
     }
+
 
     @GetMapping("/success")
     public String loginPageRedirect(Authentication authResult){
         String role = authResult.getAuthorities().toString().strip();
-        System.out.println("ROLE - " + role);
         String url = "";
         switch (role){
             case "[ADMIN]": url = "/admin_page"; break;
@@ -101,7 +102,4 @@ public class MainController {
         String redirectUrl = "redirect:" + url;
         return redirectUrl;
     }
-
-
-
 }

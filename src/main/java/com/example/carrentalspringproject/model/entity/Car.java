@@ -6,7 +6,6 @@ import com.example.carrentalspringproject.model.entity.enums.converter.StatusCon
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;

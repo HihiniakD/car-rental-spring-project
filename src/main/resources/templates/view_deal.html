@@ -16,7 +16,7 @@
             <div class="card-body">
                 <h5 class="card-title lh-1" th:text="#{yourDeal}"></h5>
                 <p class="card-text lh-1" th:text="#{carModel} + ' ' + ${session.car.brand.name} + ' ' + ${session.car.model}"></p>
-                <p class="card-text lh-1" th:text="#{transmission} + ' ' + ${session.car.transmission}"></p>
+                <p class="card-text lh-1" th:text="#{transmission} + ' ' + #{${session.car.transmission}}"></p>
                 <p class="card-text lh-1" th:text="#{passengersPre} + ' ' + ${session.car.passengers}"></p>
                 <p class="card-text lh-1" th:text="#{priceforoneday} + ' ' + ${session.car.priceForOneDay} + '$'"></p>
                 <p class="card-text lh-1" th:text="#{priceforndays} + ' ' + ${session.days} + ' ' + #{days} + ' ' + ${session.car.priceAllDays} + '$'"></p>

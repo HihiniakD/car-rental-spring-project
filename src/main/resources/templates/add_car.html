@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{addCar}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white" th:insert="parts/admin_header.html"> </header>
+
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="text-center my-2">
+                    <img src="https://cdn.worldvectorlogo.com/logos/rent-a-car-systeme.svg" alt="logo" width="100">
+                </div>
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4" th:text="#{addCar}"></h1>
+
+                        <div th:if="${error}">
+                            <div class="alert alert-danger" th:text="#{${error}}"></div>
+                        </div>
+
+                        <form method="POST" th:action="@{/admin_page/cars/addCar/process}">
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" th:text="#{pickupcity}"></label>
+                                <select name="city" class="form-select">
+                                    <option th:each="city : ${cities}" th:value="${city.id}" th:utext="#{${city.name}}"/>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" th:text="#{brand}"></label>
+                                <select name="brand" class="form-select">
+                                    <option th:each="brand : ${brands}" th:value="${brand.id}" th:utext="${brand.name}"/>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" th:text="#{carName}"></label>
+                                </div>
+                                <input class="form-control" name="model" type="text" required>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" th:text="#{category}"></label>
+                                <select name="category" class="form-select">
+                                    <option th:each="category : ${categories}" th:value="${category.id}" th:utext="#{${category.name}}"/>
+                                </select>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" th:text="#{transmission}"></label>
+                                <select name="transmission" class="form-select">
+                                    <option value="automatic" th:text="#{automatic}"></option>
+                                    <option value="manual" th:text="#{manual}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="mb-2 text-muted" th:text="#{addPassengers}"></label>
+                                <select name="passengers" class="form-select">
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" th:text="#{price}"></label>
+                                </div>
+                                <input class="form-control" name="price" type="text" th:value="0" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" th:text="#{imageURL}"></label>
+                                </div>
+                                <input class="form-control" name="url" type="text" required>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <button type="submit" class="btn btn-success ms-auto" th:text="#{addCar}">
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="text-center mt-5 text-muted" th:text="#{copyright}">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

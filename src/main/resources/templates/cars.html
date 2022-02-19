@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{cars}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header class="p-3 bg-dark text-white" th:insert="parts/admin_header.html"> </header>
+
+<div class="container fluid">
+
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successMessage}">
+        <p th:text="#{${successMessage}}"></p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${failMessage}">
+        <p th:text="#{${failMessage}}"></p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="py-3 text-center">
+        <h3 th:text="#{cars}"></h3>
+        <a th:href="@{/admin_page/cars/addCar}"><button type="button" class="btn btn-success me-2" th:text="#{addCar}"></button></a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-light">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{carId}"></th>
+                <th scope="col" th:text="#{carName}"></th>
+                <th scope="col" th:text="#{pickupcity}"></th>
+                <th scope="col" th:text="#{Passengers}"></th>
+                <th scope="col" th:text="#{price}"></th>
+                <th scope="col" th:text="#{Transmission}"></th>
+                <th scope="col" th:text="#{status}"></th>
+                <th scope="col" th:text="#{actions}"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="car : ${cars}">
+                    <td th:text="${car.id}"></td>
+                    <td th:text="${car.brand.name} + ' ' + ${car.model}"></td>
+                    <td th:text="#{${car.city.name}}"></td>
+                    <td th:text="${car.passengers}"></td>
+                    <td th:text="${car.price} + '$'"></td>
+                    <td th:text="#{${car.transmission}}"></td>
+                    <td th:text="#{${car.status}}"></td>
+                    <td>
+                        <a th:href="@{/admin_page/cars/editCar(id=${car.id})}" th:text="#{edit}"></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/admin_page/cars/deleteCar(id=${car.id})}" th:text="#{delete}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${totalPages > 1}">
+        <div class="row col-sm-7">
+            <div class="col-sm-2" th:text="#{numberOfCars} + ': ' + ${totalItems}">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class="col-sm-2">
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/admin_page/cars/page/' + ${i}}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span>
+                    </span>
+            </div>
+            <div class="col-sm-2">
+                <a th:if="${currentPage > 1}" th:href="@{'/admin_page/cars/page/' + ${currentPage - 1}}" th:text="#{prev}"></a>
+                <span th:unless="${currentPage > 1}" th:text="#{prev}"></span>
+            </div>
+            <div class="col-sm-2">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/admin_page/cars/page/' + ${currentPage + 1}}" th:text="#{next}"></a>
+                <span th:unless="${currentPage < totalPages}" th:text="#{next}"></span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/admin_page/cars/page/' + ${totalPages}}" th:text="#{last}">Last</a>
+                <span th:unless="${currentPage < totalPages}" th:text="#{last}"></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -53,12 +53,12 @@
                     <td th:text="${newOrder.id}"></td>
                     <td th:text="${newOrder.user.name}"></td>
                     <td th:text="${newOrder.car.brand.name} + ' ' + ${newOrder.car.model}"></td>
-                    <td th:text="${newOrder.city.name}"></td>
+                    <td th:text="#{${newOrder.city.name}}"></td>
                     <td th:text="${newOrder.pickUpDate}"></td>
                     <td th:text="${newOrder.dropOffDate}"></td>
-                    <td th:text="${newOrder.totalPrice}"></td>
-                    <td th:text="${newOrder.status.name()}"></td>
-                    <td th:text="${newOrder.withDriver}"></td>
+                    <td th:text="${newOrder.totalPrice} + '$'"></td>
+                    <td th:text="#{${newOrder.status.name()}}"></td>
+                    <td th:text="#{${newOrder.withDriver}}"></td>
                     <td th:text="${newOrder.comment}"></td>
                     <td>
                         <a th:href="@{/manager_page/approveBooking(id=${newOrder.id})}" th:text="#{approveRequest}"></a>
@@ -98,12 +98,12 @@
                     <td th:text="${orderInProgress.id}"></td>
                     <td th:text="${orderInProgress.user.name}"></td>
                     <td th:text="${orderInProgress.car.brand.name} + ' ' + ${orderInProgress.car.model}"></td>
-                    <td th:text="${orderInProgress.city.name}"></td>
+                    <td th:text="#{${orderInProgress.city.name}}"></td>
                     <td th:text="${orderInProgress.pickUpDate}"></td>
                     <td th:text="${orderInProgress.dropOffDate}"></td>
-                    <td th:text="${orderInProgress.totalPrice}"></td>
-                    <td th:text="${orderInProgress.status.name()}"></td>
-                    <td th:text="${orderInProgress.withDriver}"></td>
+                    <td th:text="${orderInProgress.totalPrice} + '$'"></td>
+                    <td th:text="#{${orderInProgress.status.name()}}"></td>
+                    <td th:text="#{${orderInProgress.withDriver}}"></td>
                     <td th:text="${orderInProgress.comment}"></td>
                     <td>
                         <a th:href="@{/manager_page/finishBooking(id=${orderInProgress.id})}" th:text="#{finishBooking}"></a>
@@ -139,12 +139,12 @@
                     <td th:text="${finishedOrder.id}"></td>
                     <td th:text="${finishedOrder.user.name}"></td>
                     <td th:text="${finishedOrder.car.brand.name} + ' ' + ${finishedOrder.car.model}"></td>
-                    <td th:text="${finishedOrder.city.name}"></td>
+                    <td th:text="#{${finishedOrder.city.name}}"></td>
                     <td th:text="${finishedOrder.pickUpDate}"></td>
                     <td th:text="${finishedOrder.dropOffDate}"></td>
-                    <td th:text="${finishedOrder.totalPrice}"></td>
-                    <td th:text="${finishedOrder.status.name()}"></td>
-                    <td th:text="${finishedOrder.withDriver}"></td>
+                    <td th:text="${finishedOrder.totalPrice} + '$'"></td>
+                    <td th:text="#{${finishedOrder.status.name()}}"></td>
+                    <td th:text="#{${finishedOrder.withDriver}}"></td>
                     <td th:text="${finishedOrder.comment}"></td>
                 </tr>
             </tbody>
@@ -176,12 +176,12 @@
                     <td th:text="${declinedOrder.id}"></td>
                     <td th:text="${declinedOrder.user.name}"></td>
                     <td th:text="${declinedOrder.car.brand.name} + ' ' + ${declinedOrder.car.model}"></td>
-                    <td th:text="${declinedOrder.city.name}"></td>
+                    <td th:text="#{${declinedOrder.city.name}}"></td>
                     <td th:text="${declinedOrder.pickUpDate}"></td>
                     <td th:text="${declinedOrder.dropOffDate}"></td>
-                    <td th:text="${declinedOrder.totalPrice}"></td>
-                    <td th:text="${declinedOrder.status.name()}"></td>
-                    <td th:text="${declinedOrder.withDriver}"></td>
+                    <td th:text="${declinedOrder.totalPrice} + '$'"></td>
+                    <td th:text="#{${declinedOrder.status.name()}}"></td>
+                    <td th:text="#{${declinedOrder.withDriver}}"></td>
                     <td th:text="${declinedOrder.comment}"></td>
                 </tr>
             </tbody>

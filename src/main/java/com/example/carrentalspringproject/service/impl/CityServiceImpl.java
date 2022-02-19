@@ -16,8 +16,15 @@ public class CityServiceImpl implements CityService {
     @Autowired
     public CityServiceImpl(CityRepository cityRepository) {this.cityRepository = cityRepository;}
 
+
     @Override
     public List<City> findAll() {
         return cityRepository.findAll();
+    }
+
+
+    @Override
+    public City findById(int id) {
+        return cityRepository.findCityById(id);
     }
 }

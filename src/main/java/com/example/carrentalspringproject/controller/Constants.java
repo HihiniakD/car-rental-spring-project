@@ -59,7 +59,8 @@ public class Constants {
     public static final String CAR_ID_PARAMETER = "carId";
     public static final String PENALTY_PARAMETER = "penalty";
     public static final String CURRENT_PAGE_PARAMETER = "currentPage";
-    public static final String NUMBER_OF_PAGES_PARAMETER = "numberOfPages";
+    public static final String NUMBER_OF_PAGES_PARAMETER = "totalPages";
+    public static final String TOTAL_ITEMS_PARAMETER = "totalItems";
     public static final String BLOCKED_PARAMETER = "blocked";
     public static final String MANAGERS_PARAMETER = "managers";
     public static final String PRICE_PARAMETER = "price";
@@ -67,6 +68,7 @@ public class Constants {
     public static final String TRANSMISSION_PARAMETER = "transmission";
     public static final String MODEL_PARAMETER = "model";
     public static final String PASSENGERS_PARAMETER = "passengers";
+    public static final String TOTAL_PAGES_PARAMETER = "currentPage";
 
     //errors constants
     public static final String PASSWORD_NOT_VALID = "passwordNotValid";

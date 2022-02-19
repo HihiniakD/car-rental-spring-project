@@ -46,12 +46,12 @@
                 <tr th:each="order : ${orders}">
                     <td th:text="${order.id}"></td>
                     <td th:text="${order.car.getBrand().name} + ' ' + ${order.car.model}"></td>
-                    <td th:text="${order.city.name}"></td>
+                    <td th:text="#{${order.city.name}}"></td>
                     <td th:text="${order.pickUpDate}">${order.pickupDate}</td>
                     <td th:text="${order.dropOffDate}"></td>
-                    <td th:text="${order.totalPrice}"></td>
-                    <td th:text="${order.status.name()}"></td>
-                    <td th:text="${order.withDriver}"></td>
+                    <td th:text="${order.totalPrice} + '$'"></td>
+                    <td th:text="#{${order.status.name()}}"></td>
+                    <td th:text="#{${order.withDriver}}"></td>
                     <td th:text="${order.comment}"></td>
                 </tr>
 

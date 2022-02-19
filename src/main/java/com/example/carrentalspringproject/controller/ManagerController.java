@@ -31,6 +31,7 @@ public class ManagerController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/manager_page")
     public String showManagerPage(Model model){
         List<Order> newOrders = orderService.findAllNewOrders();
@@ -41,9 +42,9 @@ public class ManagerController {
         model.addAttribute(IN_PROGRESS_ORDERS_PARAMETER, ordersInProgress);
         model.addAttribute(FINISHED_ORDERS_PARAMETER, finishedOrders);
         model.addAttribute(DECLINED_ORDERS_PARAMETER, declinedOrders);
-
         return "manager_page";
     }
+
 
     @GetMapping("/manager_page/approveBooking")
     public String approveBooking(@RequestParam(name = "id") int orderId, RedirectAttributes redirectAttributes){
@@ -52,13 +53,14 @@ public class ManagerController {
         return "redirect:/manager_page";
     }
 
+
     @GetMapping("/manager_page/declineBooking")
     public String declineBooking(@RequestParam(name = "id") int orderId, Model model){
         Order order = orderService.findById(orderId);
         model.addAttribute(ORDER_PARAMETER, order);
-
         return "decline_order";
     }
+
 
     @PostMapping("/manager_page/declineBooking/process")
     public String processDeclineBooking(@RequestParam(name = "id") int orderId,
@@ -71,13 +73,14 @@ public class ManagerController {
         return "redirect:/manager_page";
     }
 
+
     @GetMapping("/manager_page/finishBooking")
     public String finishBooking(@RequestParam(name = "id") int orderId, Model model){
         Order order = orderService.findById(orderId);
         model.addAttribute(ORDER_PARAMETER, order);
-
         return "finish_booking";
     }
+
 
     @PostMapping("/manager_page/finishBooking/process")
     public String processFinishBooking(@RequestParam(name = "id") int orderId,
@@ -94,5 +97,4 @@ public class ManagerController {
         }
         return "redirect:/manager_page";
     }
-
 }

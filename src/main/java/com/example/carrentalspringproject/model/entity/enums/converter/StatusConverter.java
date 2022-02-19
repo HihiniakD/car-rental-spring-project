@@ -1,6 +1,5 @@
 package com.example.carrentalspringproject.model.entity.enums.converter;
 
-import com.example.carrentalspringproject.model.entity.enums.Role;
 import com.example.carrentalspringproject.model.entity.enums.Status;
 
 import javax.persistence.AttributeConverter;

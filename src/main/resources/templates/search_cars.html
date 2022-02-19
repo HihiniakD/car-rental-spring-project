@@ -32,10 +32,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a th:href="@{/search_cars/view_deal(id=${car.id})}"><button type="button" class="btn btn-sm btn-success" th:text="#{viewDeal}"></button></a>
-<!--                                    <button onclick="location.href='/viewDeals'" type="button" class="btn btn-sm btn-success" th:text="#{viewDeal}"></button>-->
-                                    <button type="button" class="btn btn-sm btn-secondary" disabled th:text="${car.transmission}"></button>
+                                    <button type="button" class="btn btn-sm btn-secondary" disabled th:text="#{${car.transmission}}"></button>
                                     <button type="button" class="btn btn-sm btn-secondary" disabled th:text="${car.passengers} + ' ' + #{passengers}"></button>
-                                    <button type="button" class="btn btn-sm btn-secondary" disabled th:text="${car.category.name}"></button>
+                                    <button type="button" class="btn btn-sm btn-secondary" disabled th:text="#{${car.category.name}}"></button>
                                 </div>
                             </div>
                         </div>

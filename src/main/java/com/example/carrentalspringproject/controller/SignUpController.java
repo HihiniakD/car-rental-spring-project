@@ -28,14 +28,14 @@ public class SignUpController {
         return new SignUpUserDto();
     }
 
+
     @GetMapping
-    public String signUp(Model model) {return "sign_up";}
+    public String signUp() {return "sign_up";}
 
 
     @PostMapping
     public String processSignUp(@ModelAttribute("user") @Valid SignUpUserDto userDto,
                                 BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-
         User user = userService.findByEmail(userDto.getEmail());
         if(user != null) {
             model.addAttribute(ERROR_PARAMETER, EMAIL_EXISTS);

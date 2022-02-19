@@ -79,7 +79,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label for="disabledPickUpCity" class="form-label" th:text="#{pickupcity}"></label>
-                            <input type="text" id="disabledPickUpCity" class="form-control" disabled th:value="${session.car.city.name}">
+                            <input type="text" id="disabledPickUpCity" class="form-control" disabled th:value="#{${session.car.city.name}}">
                         </div>
                     </div>
                     <hr class="my-4">

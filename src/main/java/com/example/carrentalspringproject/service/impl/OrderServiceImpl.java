@@ -23,26 +23,29 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
-
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
+
 
     @Override
     public List<Order> findAllByUserId(int id) {
         return orderRepository.findAllByUserId(id);
     }
 
+
     @Override
     public long calculateTotalPrice(int price, long days) {
         return PriceService.calculateTotalPrice(price, days);
     }
 
+
     @Override
     public long calculateCarDriverPrice(long days) {
         return PriceService.calculateCarDrivePrice(days);
     }
+
 
     @Override
     public boolean validateOrderPayment(String creditCardName, String creditCardNumber, String creditCardExpiration, String creditCardCvv) {
@@ -61,11 +64,11 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
 
+
     @Override
     @Transactional
     public Order processOrder(User user, CarDto car, String pickUpDate, String dropOffDate, long totalPrice, boolean withDriver) {
         Order order = new Order();
-
         order.setUser(user);
         order.setCar(CarDto.mapDtoToCar(car));
         order.setCity(car.getCity());
@@ -75,29 +78,33 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(Status.PROCESSING);
         order.setWithDriver(withDriver);
         System.out.println(order);
-
         return orderRepository.save(order);
     }
+
 
     @Override
     public List<Order> findAllNewOrders() {
         return orderRepository.findAllByStatus(Status.PROCESSING);
     }
 
+
     @Override
     public List<Order> findAllInProgressOrders() {
         return orderRepository.findAllByStatus(Status.APPROVED);
     }
+
 
     @Override
     public List<Order> findAllFinishedOrders() {
         return orderRepository.findAllByStatus(Status.DONE);
     }
 
+
     @Override
     public List<Order> findAllDeclinedOrders() {
         return orderRepository.findAllByStatus(Status.CANCELED);
     }
+
 
     @Override
     @Transactional
@@ -105,16 +112,19 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.changeStatusById(status.getStatus(), id);
     }
 
+
     @Override
     public Order findById(int id) {
         return orderRepository.findById(id);
     }
+
 
     @Override
     @Transactional
     public void declineOrder(int id, String comment) {
         orderRepository.changeStatusByIdAndSetComment(Status.CANCELED.getStatus(), comment, id);
     }
+
 
     @Override
     @Transactional

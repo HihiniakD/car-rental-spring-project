@@ -3,11 +3,9 @@ package com.example.carrentalspringproject.model.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Getter
 @Setter
@@ -30,7 +28,6 @@ public class Brand {
         this.id = id;
         this.name = name;
     }
-
 
     @Override
     public String toString() {
