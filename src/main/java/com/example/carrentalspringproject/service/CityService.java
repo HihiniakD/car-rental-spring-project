@@ -1,6 +1,5 @@
 package com.example.carrentalspringproject.service;
 
-import com.example.carrentalspringproject.model.entity.Category;
 import com.example.carrentalspringproject.model.entity.City;
 
 import java.util.List;

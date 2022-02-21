@@ -6,6 +6,7 @@ import com.example.carrentalspringproject.model.entity.User;
 import com.example.carrentalspringproject.model.entity.enums.Role;
 import com.example.carrentalspringproject.repos.UserRepository;
 import com.example.carrentalspringproject.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,11 +23,13 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import static com.example.carrentalspringproject.controller.Constants.*;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
 
     @Autowired
@@ -51,6 +54,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(signUp.getPhone());
         user.setBlocked(false);
         user.setRole(Role.USER);
+        logger.info(NEW_USER_CREATED + user.getEmail());
         return userRepository.save(user);
     }
 
@@ -92,6 +96,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(manager.getPhone());
         user.setBlocked(false);
         user.setRole(Role.MANAGER);
+        logger.info(NEW_MANAGER_CREATED + user.getEmail());
         return userRepository.save(user);
     }
 
@@ -107,8 +112,10 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
         if (user == null || user.isBlocked()) {
-            throw new UsernameNotFoundException("Invalid username or password");
+            logger.info(FAILED_LOGIN + email);
+            throw new UsernameNotFoundException("Invalid username/password or user blocked");
         }
+        logger.info(SUCCESS_LOGIN + email);
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(), mapRoleToAuthorities(user.getRole()));
     }

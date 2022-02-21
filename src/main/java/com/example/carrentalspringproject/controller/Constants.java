@@ -75,9 +75,6 @@ public class Constants {
     public static final String PHONE_NOT_VALID = "phoneNotValid";
     public static final String USER_NOT_FOUND = "userNotFound";
     public static final String DATA_NOT_VALID = "dataNotValid";
-    public static final String USER_BLOCKED = "userBlocked";
-    public static final String WRONG_PASSWORD = "wrongPassword";
-    public static final String OTHER_ERROR = "otherError";
     public static final String CAR_NOT_AVAILABLE_ERROR = "carNotAvailable";
     public static final String CC_NAME_NOT_VALID_ERROR = "ccNameNotValid";
     public static final String CC_NUMBER_NOT_VALID_ERROR = "ccNumberNotValid";
@@ -90,4 +87,14 @@ public class Constants {
     public static final String SUCCESS_SIGN_UP_MESSAGE = "successSignUpMessage";
     public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String FAIL_MESSAGE = "failMessage";
+
+    //Logger messages
+    public static final String FAILED_LOGIN = "Failed login attempt with email - ";
+    public static final String SUCCESS_LOGIN = "Success login attempt with email - ";
+    public static final String NEW_USER_CREATED = "New user created with email - ";
+    public static final String NEW_MANAGER_CREATED = "New manager created with email - ";
+    public static final String CAR_DELETED = "Car was deleted. ID - ";
+    public static final String NEW_CAR_ADDED = "New car created with values(brand, model, city, price) - ";
+    public static final String ORDER_DECLINED = "Order was declined. ID, comment - ";
+    public static final String NEW_ORDER_CREATED = "New order created with values(userId, carId, city, price) - ";
 }

@@ -45,7 +45,8 @@
 
                 <tr th:each="order : ${orders}">
                     <td th:text="${order.id}"></td>
-                    <td th:text="${order.car.getBrand().name} + ' ' + ${order.car.model}"></td>
+<!--                    <td th:text="${order.car.getBrand().name} + ' ' + ${order.car.model}"></td>-->
+                    <td th:text="${order.car != null} ? ${order.car.getBrand().name} + ' ' + ${order.car.model} : #{carDeleted}"></td>
                     <td th:text="#{${order.city.name}}"></td>
                     <td th:text="${order.pickUpDate}">${order.pickupDate}</td>
                     <td th:text="${order.dropOffDate}"></td>

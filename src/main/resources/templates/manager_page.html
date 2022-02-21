@@ -52,7 +52,7 @@
                 <tr th:each="newOrder : ${newOrders}">
                     <td th:text="${newOrder.id}"></td>
                     <td th:text="${newOrder.user.name}"></td>
-                    <td th:text="${newOrder.car.brand.name} + ' ' + ${newOrder.car.model}"></td>
+                    <td th:text="${newOrder.car != null} ? ${newOrder.car.brand.name} + ' ' + ${newOrder.car.model} :  #{carDeleted}"></td>
                     <td th:text="#{${newOrder.city.name}}"></td>
                     <td th:text="${newOrder.pickUpDate}"></td>
                     <td th:text="${newOrder.dropOffDate}"></td>
@@ -97,7 +97,7 @@
                 <tr th:each="orderInProgress : ${ordersInProgress}">
                     <td th:text="${orderInProgress.id}"></td>
                     <td th:text="${orderInProgress.user.name}"></td>
-                    <td th:text="${orderInProgress.car.brand.name} + ' ' + ${orderInProgress.car.model}"></td>
+                    <td th:text="${orderInProgress.car != null} ? ${orderInProgress.car.brand.name} + ' ' + ${orderInProgress.car.model} :  #{carDeleted}"></td>
                     <td th:text="#{${orderInProgress.city.name}}"></td>
                     <td th:text="${orderInProgress.pickUpDate}"></td>
                     <td th:text="${orderInProgress.dropOffDate}"></td>
@@ -138,7 +138,7 @@
                 <tr th:each="finishedOrder : ${finishedOrders}">
                     <td th:text="${finishedOrder.id}"></td>
                     <td th:text="${finishedOrder.user.name}"></td>
-                    <td th:text="${finishedOrder.car.brand.name} + ' ' + ${finishedOrder.car.model}"></td>
+                    <td th:text="${finishedOrder.car != null} ? ${finishedOrder.car.brand.name} + ' ' + ${finishedOrder.car.model} :  #{carDeleted}"></td>
                     <td th:text="#{${finishedOrder.city.name}}"></td>
                     <td th:text="${finishedOrder.pickUpDate}"></td>
                     <td th:text="${finishedOrder.dropOffDate}"></td>
@@ -175,7 +175,7 @@
                 <tr th:each="declinedOrder : ${declinedOrders}">
                     <td th:text="${declinedOrder.id}"></td>
                     <td th:text="${declinedOrder.user.name}"></td>
-                    <td th:text="${declinedOrder.car.brand.name} + ' ' + ${declinedOrder.car.model}"></td>
+                    <td th:text="${declinedOrder.car != null} ? ${declinedOrder.car.brand.name} + ' ' + ${declinedOrder.car.model} :  #{carDeleted}"></td>
                     <td th:text="#{${declinedOrder.city.name}}"></td>
                     <td th:text="${declinedOrder.pickUpDate}"></td>
                     <td th:text="${declinedOrder.dropOffDate}"></td>

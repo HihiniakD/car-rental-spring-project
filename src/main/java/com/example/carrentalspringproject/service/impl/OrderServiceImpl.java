@@ -9,6 +9,7 @@ import com.example.carrentalspringproject.repos.OrderRepository;
 import com.example.carrentalspringproject.service.OrderService;
 import com.example.carrentalspringproject.service.util.PriceService;
 import com.example.carrentalspringproject.service.util.SecurityService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    private static final Logger logger = Logger.getLogger(OrderServiceImpl.class);
     private final OrderRepository orderRepository;
 
     @Autowired
@@ -78,6 +80,8 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(Status.PROCESSING);
         order.setWithDriver(withDriver);
         System.out.println(order);
+        logger.info(String.format("%s %d, %d, %s, %d", NEW_ORDER_CREATED, user.getId(), car.getId(),
+                car.getCity().getName(), totalPrice));
         return orderRepository.save(order);
     }
 
@@ -122,6 +126,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void declineOrder(int id, String comment) {
+        logger.info(String.format("%s %d, %s", ORDER_DECLINED, id, comment));
         orderRepository.changeStatusByIdAndSetComment(Status.CANCELED.getStatus(), comment, id);
     }
 

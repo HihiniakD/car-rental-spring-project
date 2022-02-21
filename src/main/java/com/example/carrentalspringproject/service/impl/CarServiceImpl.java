@@ -12,6 +12,7 @@ import com.example.carrentalspringproject.repos.CarRepository;
 import com.example.carrentalspringproject.service.CarService;
 import com.example.carrentalspringproject.service.util.DateService;
 import com.example.carrentalspringproject.service.util.SecurityService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +22,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
+
 import static com.example.carrentalspringproject.controller.Constants.*;
 
 @Service
 public class CarServiceImpl implements CarService {
 
+    private static final Logger logger = Logger.getLogger(CarServiceImpl.class);
     private final CarRepository carRepository;
 
     @Autowired
@@ -100,6 +104,7 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional
     public void deleteCar(int id) {
+        logger.info(CAR_DELETED + id);
         carRepository.deleteCarById(id);
     }
 
@@ -131,6 +136,8 @@ public class CarServiceImpl implements CarService {
         car.setCity(city);
         car.setCategory(category);
         car.setImageUrl(imageUrl);
+        logger.info(String.format("%s %s, %s, %s, %d", NEW_CAR_ADDED, car.getBrand().getName(),
+                car.getModel(), car.getCity().getName(), car.getPrice()));
         carRepository.save(car);
     }
 

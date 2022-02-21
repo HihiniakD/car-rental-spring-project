@@ -16,14 +16,14 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     User findByEmail(String email);
     @Transactional
     @Modifying
-    @Query(value = "UPDATE CarRental.user SET name=? WHERE id=?", nativeQuery = true)
+    @Query(value = "UPDATE CarRentalSpring.user SET name=? WHERE id=?", nativeQuery = true)
     void changeUserNameById(String name, int userID);
 
     List<User> findUsersByRole(Role role);
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE CarRental.user SET blocked=? WHERE id=?", nativeQuery = true)
+    @Query(value = "UPDATE CarRentalSpring.user SET blocked=? WHERE id=?", nativeQuery = true)
     void changeBlockedStatusById(boolean blocked, int userID);
 
     Page<User> findAll(Pageable pageable);
