@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    @Query(value = "SELECT * FROM carrental.user WHERE email=?", nativeQuery = true)
+    @Query(value = "SELECT * FROM CarRentalSpring.user WHERE email=?", nativeQuery = true)
     User findByEmail(String email);
 
     User save(SignUpUserDto signUp);

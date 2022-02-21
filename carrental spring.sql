@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS CarRentalSpring.role (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table TaxiService.user
+-- Table CarRentalSpring.user
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS CarRentalSpring.user (

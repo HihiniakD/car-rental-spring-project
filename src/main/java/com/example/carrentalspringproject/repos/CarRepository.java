@@ -27,7 +27,7 @@ public interface CarRepository extends CrudRepository<Car, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE CarRental.car SET status_id=? WHERE id=?", nativeQuery = true)
+    @Query(value = "UPDATE CarRentalSpring.car SET status_id=? WHERE id=?", nativeQuery = true)
     void changeStatus(int statusId, int carId);
 
     Page<Car> findAll(Pageable pageable);
@@ -38,6 +38,6 @@ public interface CarRepository extends CrudRepository<Car, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE CarRental.car SET price=?, image_url=? WHERE id=?", nativeQuery = true)
+    @Query(value = "UPDATE CarRentalSpring.car SET price=?, image_url=? WHERE id=?", nativeQuery = true)
     void editCar(int price, String imageUrl, int id);
 }
