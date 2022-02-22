@@ -79,7 +79,6 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalPrice((int) totalPrice);
         order.setStatus(Status.PROCESSING);
         order.setWithDriver(withDriver);
-        System.out.println(order);
         logger.info(String.format("%s %d, %d, %s, %d", NEW_ORDER_CREATED, user.getId(), car.getId(),
                 car.getCity().getName(), totalPrice));
         return orderRepository.save(order);
