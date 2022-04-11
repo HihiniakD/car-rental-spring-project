@@ -20,7 +20,8 @@ public class DateService {
             LocalDate today = LocalDate.now();
             if (pickUpLocalDate.isBefore(today) || pickUpLocalDate.isEqual(today) ||
                     dropOffLocalDate.isBefore(today) || dropOffLocalDate.isEqual(today) ||
-                    dropOffLocalDate.isEqual(today.plusDays(1)))
+                    dropOffLocalDate.isEqual(today.plusDays(1)) || dropOffLocalDate.isBefore(pickUpLocalDate) ||
+                    dropOffLocalDate.equals(pickUpLocalDate))
                 throw new ServiceException(DATE_NOT_VALID);
 
             days = DAYS.between(pickUpLocalDate, dropOffLocalDate);

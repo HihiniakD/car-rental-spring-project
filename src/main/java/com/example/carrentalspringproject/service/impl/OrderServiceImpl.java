@@ -141,7 +141,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public boolean validatePenaltyFee(String penaltyFee) {
+    public void validatePenaltyFee(String penaltyFee) {
         if (penaltyFee == null || penaltyFee.isBlank())
             throw new ServiceException(FAIL_MESSAGE);
 
@@ -150,6 +150,5 @@ public class OrderServiceImpl implements OrderService {
         }catch (NumberFormatException exception){
             throw new ServiceException(FAIL_MESSAGE);
         }
-        return true;
     }
 }

@@ -142,7 +142,7 @@ public class CarServiceImpl implements CarService {
     }
 
 
-    private boolean validateEditCar(String price, String imageUrl) {
+    private void validateEditCar(String price, String imageUrl) {
         try{
             Integer.parseInt(price);
         }catch (NumberFormatException e){
@@ -151,14 +151,13 @@ public class CarServiceImpl implements CarService {
         if (!SecurityService.isUrlValid(imageUrl)){
             throw new ServiceException(DATA_NOT_VALID);
         }
-        return true;
     }
 
 
     /**
      * AddCar form validation
      */
-    private boolean validateAddCar(String price, String model, String imageUrl) {
+    private void validateAddCar(String price, String model, String imageUrl) {
         try{
             Integer.parseInt(price);
         }catch (NumberFormatException e){
@@ -169,7 +168,5 @@ public class CarServiceImpl implements CarService {
         }
         if (model == null || model.isBlank())
             throw new ServiceException(DATA_NOT_VALID);
-
-        return true;
     }
 }

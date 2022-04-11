@@ -12,8 +12,6 @@ public interface OrderRepository extends CrudRepository<Order, Integer> {
     @Query(value = "SELECT * FROM CarRentalSpring.orders where user_id=?", nativeQuery = true)
     List<Order> findAllByUserId(int id);
 
-    Order save(Order order);
-
     List<Order> findAllByStatus(Status status);
 
     @Modifying
